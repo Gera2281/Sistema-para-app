@@ -1,9 +1,148 @@
-<div class="dashboard-container">
-  <div class="dashboard-card">
-    <h1>Bienvenido al dashboard</h1>
-    <p *ngIf="usuario$ | async as usuario">
-      Hola, {{ usuario.nombre }}
-    </p>
-    <button class="btn btn-primary" (click)="cerrarSesion()">Cerrar sesión</button>
-  </div>
+<div class="dashboard-layout" *ngIf="usuario$ | async as usuario">
+  <aside class="sidebar" aria-label="Navegación principal">
+    <div class="brand">
+      <span class="brand-name">domain Residentify</span>
+      <small>Management Portal</small>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-link active" href="#overview" aria-current="page">
+        <span aria-hidden="true">▦</span>
+        Dashboard
+      </a>
+      <a class="nav-link" href="#users"><span aria-hidden="true">♙</span> Usuarios</a>
+      <a class="nav-link" href="#properties"><span aria-hidden="true">▦</span> Propiedades</a>
+      <a class="nav-link" href="#reports"><span aria-hidden="true">▤</span> Reportes</a>
+      <a class="nav-link" href="#settings"><span aria-hidden="true">⚙</span> Configuración</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <header class="topbar">
+      <label class="search-box" for="dashboard-search">
+        <span aria-hidden="true">⌕</span>
+        <input id="dashboard-search" type="search" placeholder="Buscar residentes, propiedades..." />
+      </label>
+
+      <div class="topbar-actions">
+        <button class="icon-button" type="button" aria-label="Ver notificaciones">♧</button>
+        <button class="icon-button" type="button" aria-label="Abrir configuración">⚙</button>
+        <span class="user-avatar" aria-hidden="true">{{ usuario.nombre.charAt(0) }}</span>
+        <button class="logout-button" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <section class="dashboard-content" id="overview">
+      <div class="page-heading">
+        <div>
+          <h1>Resumen del sistema</h1>
+          <p>Bienvenido, {{ usuario.nombre }}. Esto es lo que sucede hoy en Residentify.</p>
+        </div>
+
+        <div class="period-selector" role="group" aria-label="Periodo del resumen">
+          <button class="active" type="button">Hoy</button>
+          <button type="button">Semanal</button>
+          <button type="button">Mensual</button>
+        </div>
+      </div>
+
+      <section class="stats-grid" aria-label="Indicadores principales">
+        <article class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-icon users" aria-hidden="true">♟</span>
+            <small class="trend positive">↗ 12%</small>
+          </div>
+          <p>Usuarios totales</p>
+          <strong>1,284</strong>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-icon guards" aria-hidden="true">♦</span>
+            <small class="trend neutral">− 0%</small>
+          </div>
+          <p>Guardias</p>
+          <strong>42</strong>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-icon residents" aria-hidden="true">⌂</span>
+            <small class="trend positive">↗ 4%</small>
+          </div>
+          <p>Residentes</p>
+          <strong>856</strong>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-icon tenants" aria-hidden="true">♙</span>
+            <small class="trend negative">↘ 2%</small>
+          </div>
+          <p>Inquilinos</p>
+          <strong>386</strong>
+        </article>
+      </section>
+
+      <section class="user-management" id="users" aria-labelledby="user-management-title">
+        <div class="section-heading">
+          <h2 id="user-management-title">Gestión de usuarios</h2>
+          <button class="primary-button" type="button">
+            <span aria-hidden="true">♧</span>
+            Agregar nuevo cliente
+          </button>
+        </div>
+
+        <div class="filters" aria-label="Filtros de usuarios">
+          <button class="filter-button" type="button">☰ Filtrar por</button>
+          <button class="filter-button" type="button">Rol: Todos⌄</button>
+          <button class="filter-button" type="button">Estado: Activo⌄</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="table-avatar blue">JS</span> Javier Solis</td>
+                <td>javier.solis@example.com</td>
+                <td><span class="role resident">Residente</span></td>
+                <td><span class="status active">Activo</span></td>
+                <td><button class="more-button" type="button" aria-label="Acciones de Javier Solis">•••</button></td>
+              </tr>
+              <tr>
+                <td><span class="table-avatar dark">AM</span> Ana Martínez</td>
+                <td>ana.mtz@security.res</td>
+                <td><span class="role guard">Guardia</span></td>
+                <td><span class="status active">En turno</span></td>
+                <td><button class="more-button" type="button" aria-label="Acciones de Ana Martínez">•••</button></td>
+              </tr>
+              <tr>
+                <td><span class="table-avatar orange">RC</span> Roberto Carlos</td>
+                <td>rcarlos@tenant.net</td>
+                <td><span class="role tenant">Inquilino</span></td>
+                <td><span class="status inactive">Inactivo</span></td>
+                <td><button class="more-button" type="button" aria-label="Acciones de Roberto Carlos">•••</button></td>
+              </tr>
+              <tr>
+                <td><span class="table-avatar light">ML</span> María López</td>
+                <td>m.lopez@gmail.com</td>
+                <td><span class="role resident">Residente</span></td>
+                <td><span class="status active">Activo</span></td>
+                <td><button class="more-button" type="button" aria-label="Acciones de María López">•••</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
 </div>
