@@ -10,10 +10,10 @@
         <span aria-hidden="true">▦</span>
         Dashboard
       </a>
-      <a class="nav-link" href="#users"><span aria-hidden="true">♙</span> Usuarios</a>
-      <a class="nav-link" href="#properties"><span aria-hidden="true">▦</span> Propiedades</a>
-      <a class="nav-link" href="#reports"><span aria-hidden="true">▤</span> Reportes</a>
-      <a class="nav-link" href="#settings"><span aria-hidden="true">⚙</span> Configuración</a>
+      <a class="nav-link" href="#users"><span aria-hidden="true">♙</span> Users</a>
+      <a class="nav-link" href="#properties"><span aria-hidden="true">▦</span> Properties</a>
+      <a class="nav-link" href="#reports"><span aria-hidden="true">▤</span> Reports</a>
+      <a class="nav-link" href="#settings"><span aria-hidden="true">⚙</span> Settings</a>
     </nav>
   </aside>
 
@@ -35,14 +35,14 @@
     <section class="dashboard-content" id="overview">
       <div class="page-heading">
         <div>
-          <h1>Resumen del sistema</h1>
-          <p>Bienvenido, {{ usuario.nombre }}. Esto es lo que sucede hoy en Residentify.</p>
+          <h1>System Overview</h1>
+          <p>Welcome back, {{ usuario.nombre }}. Here's what's happening today at Residentify.</p>
         </div>
 
         <div class="period-selector" role="group" aria-label="Periodo del resumen">
-          <button class="active" type="button">Hoy</button>
-          <button type="button">Semanal</button>
-          <button type="button">Mensual</button>
+          <button class="active" type="button">Today</button>
+          <button type="button">Weekly</button>
+          <button type="button">Monthly</button>
         </div>
       </div>
 
@@ -52,7 +52,7 @@
             <span class="stat-icon users" aria-hidden="true">♟</span>
             <small class="trend positive">↗ 12%</small>
           </div>
-          <p>Usuarios totales</p>
+          <p>Total Users</p>
           <strong>1,284</strong>
         </article>
 
@@ -61,7 +61,7 @@
             <span class="stat-icon guards" aria-hidden="true">♦</span>
             <small class="trend neutral">− 0%</small>
           </div>
-          <p>Guardias</p>
+          <p>Guards</p>
           <strong>42</strong>
         </article>
 
@@ -70,7 +70,7 @@
             <span class="stat-icon residents" aria-hidden="true">⌂</span>
             <small class="trend positive">↗ 4%</small>
           </div>
-          <p>Residentes</p>
+          <p>Residents</p>
           <strong>856</strong>
         </article>
 
@@ -79,14 +79,14 @@
             <span class="stat-icon tenants" aria-hidden="true">♙</span>
             <small class="trend negative">↘ 2%</small>
           </div>
-          <p>Inquilinos</p>
+          <p>Tenants</p>
           <strong>386</strong>
         </article>
       </section>
 
       <section class="user-management" id="users" aria-labelledby="user-management-title">
         <div class="section-heading">
-          <h2 id="user-management-title">Gestión de usuarios</h2>
+          <h3 id="user-management-title">User Management</h3>
           <button class="primary-button" type="button">
             <span aria-hidden="true">♧</span>
             Agregar nuevo cliente
@@ -94,20 +94,20 @@
         </div>
 
         <div class="filters" aria-label="Filtros de usuarios">
-          <button class="filter-button" type="button">☰ Filtrar por</button>
-          <button class="filter-button" type="button">Rol: Todos⌄</button>
-          <button class="filter-button" type="button">Estado: Activo⌄</button>
+          <button class="filter-button" type="button">☰ Filter By</button>
+          <button class="filter-button" type="button">Role: All⌄</button>
+          <button class="filter-button" type="button">Status: Active⌄</button>
         </div>
 
         <div class="table-wrapper">
           <table>
             <thead>
               <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Rol</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Acciones</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
