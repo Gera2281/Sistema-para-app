@@ -1,48 +1,102 @@
-<div class="login-container">
-  <div class="login-card">
-    <div class="login-header">
-      <div class="logo">🏠</div>
-      <h1>Sistema App</h1>
-      <p *ngIf="!mostrarFormularioRegistro">Accede a tu cuenta</p>
-      <p *ngIf="mostrarFormularioRegistro">Crea una nueva cuenta</p>
+<main class="login-container">
+  <section class="login-card" aria-labelledby="login-title">
+    <header class="login-header">
+      <div class="brand-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M5 3h11a2 2 0 0 1 2 2v14H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" fill="currentColor" opacity=".18"/>
+          <path d="M6 6h8v11H6V6Zm2 2v2m2-2v2m2-2v2M8 13h1m2 0h1m-4 2h1m2 0h1M17 10h2v9h-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1 class="brand-name">Residentify</h1>
+      <p class="brand-tagline">Precision property management at your fingertips.</p>
+    </header>
+
+    <div class="form-introduction">
+      <h2 id="login-title">{{ mostrarFormularioRegistro ? 'Create an account' : 'Welcome Back' }}</h2>
+      <p>{{ mostrarFormularioRegistro ? 'Complete your details to create your portal access.' : 'Please enter your credentials to access your portal.' }}</p>
     </div>
 
-    <div class="error-message" *ngIf="error">{{ error }}</div>
+    <div class="error-message" *ngIf="error" role="alert">{{ error }}</div>
 
     <form *ngIf="!mostrarFormularioRegistro" (ngSubmit)="iniciarSesion()" class="login-form">
-      <label>Correo</label>
-      <input type="email" [(ngModel)]="correo" name="correo" required />
+      <div class="form-field">
+        <label for="login-email">Email Address</label>
+        <div class="input-control">
+          <span class="input-icon" aria-hidden="true">🖂</span>
+          <input id="login-email" type="email" [(ngModel)]="correo" name="correo" autocomplete="email" placeholder="name@company.com" required />
+        </div>
+      </div>
 
-      <label>Contraseña</label>
-      <input type="password" [(ngModel)]="contrasena" name="contrasena" required />
+      <div class="form-field">
+        <div class="label-row">
+          <label for="login-password">Password</label>
+          <button class="text-button" type="button">Forgot password?</button>
+        </div>
+        <div class="input-control">
+          <span class="input-icon" aria-hidden="true">🔒︎</span>
+          <input id="login-password" [type]="mostrarContrasena ? 'text' : 'password'" [(ngModel)]="contrasena" name="contrasena" autocomplete="current-password" placeholder="Enter your password" required />
+          <button class="password-toggle" type="button" (click)="alternarVisibilidadContrasena()" [attr.aria-label]="mostrarContrasena ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+            {{ mostrarContrasena ? '◉' : '◌' }}
+          </button>
+        </div>
+      </div>
 
-      <button type="submit" [disabled]="cargando">{{ cargando ? 'Cargando...' : 'Iniciar sesión' }}</button>
+      <label class="remember-option">
+        <input type="checkbox" name="recordarDispositivo" />
+        <span>Remember this device</span>
+      </label>
 
+      <button class="submit-button" type="submit" [disabled]="cargando">
+        {{ cargando ? 'Signing in...' : 'Sign In' }} <span aria-hidden="true">→</span>
+      </button>
+
+      <div class="form-divider" aria-hidden="true"></div>
       <p class="switch-text">
-        ¿No tienes cuenta?
-        <button type="button" (click)="alternarFormulario()">Regístrate</button>
+        Don’t have an account?
+        <button type="button" (click)="alternarFormulario()">Sign up</button>
       </p>
     </form>
 
-    <form *ngIf="mostrarFormularioRegistro" (ngSubmit)="registrarUsuario()" class="login-form">
-      <label>Nombre</label>
-      <input type="text" [(ngModel)]="nombre" name="nombre" required />
+    <form *ngIf="mostrarFormularioRegistro" (ngSubmit)="registrarUsuario()" class="login-form register-form">
+      <div class="form-field">
+        <label for="register-name">Nombre</label>
+        <div class="input-control">
+          <span class="input-icon" aria-hidden="true">♙</span>
+          <input id="register-name" type="text" [(ngModel)]="nombre" name="nombre" autocomplete="name" placeholder="Tu nombre completo" required />
+        </div>
+      </div>
 
-      <label>Correo</label>
-      <input type="email" [(ngModel)]="correo" name="correo" required />
+      <div class="form-field">
+        <label for="register-email">Correo electrónico</label>
+        <div class="input-control">
+          <span class="input-icon" aria-hidden="true">🖂</span>
+          <input id="register-email" type="email" [(ngModel)]="correo" name="correo" autocomplete="email" placeholder="nombre@correo.com" required />
+        </div>
+      </div>
 
-      <label>Contraseña</label>
-      <input type="password" [(ngModel)]="contrasena" name="contrasena" required />
+      <div class="form-field">
+        <label for="register-password">Contraseña</label>
+        <div class="input-control">
+          <span class="input-icon" aria-hidden="true">🔒︎</span>
+          <input id="register-password" type="password" [(ngModel)]="contrasena" name="contrasena" autocomplete="new-password" placeholder="Crea una contraseña" required />
+        </div>
+      </div>
 
-      <label>Confirmar contraseña</label>
-      <input type="password" [(ngModel)]="passwordConfirmacion" name="passwordConfirmacion" required />
+      <div class="form-field">
+        <label for="register-password-confirmation">Confirmar contraseña</label>
+        <div class="input-control">
+          <span class="input-icon" aria-hidden="true">🔒︎</span>
+          <input id="register-password-confirmation" type="password" [(ngModel)]="passwordConfirmacion" name="passwordConfirmacion" autocomplete="new-password" placeholder="Repite tu contraseña" required />
+        </div>
+      </div>
 
-      <button type="submit" [disabled]="cargando">{{ cargando ? 'Cargando...' : 'Crear cuenta' }}</button>
+      <button class="submit-button" type="submit" [disabled]="cargando">{{ cargando ? 'Creando cuenta...' : 'Crear cuenta' }}</button>
 
+      <div class="form-divider" aria-hidden="true"></div>
       <p class="switch-text">
         ¿Ya tienes cuenta?
         <button type="button" (click)="alternarFormulario()">Inicia sesión</button>
       </p>
     </form>
-  </div>
-</div>
+  </section>
+</main>

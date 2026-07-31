@@ -17,6 +17,7 @@ export class LoginComponent {
   nombre = '';
   passwordConfirmacion = '';
   mostrarFormularioRegistro = false;
+  mostrarContrasena = false;
   cargando = false;
   error = '';
 
@@ -78,5 +79,10 @@ export class LoginComponent {
     this.contrasena = '';
     this.nombre = '';
     this.passwordConfirmacion = '';
+    this.mostrarContrasena = false;
+  }
+
+  alternarVisibilidadContrasena(): void {
+    this.mostrarContrasena = !this.mostrarContrasena;
   }
 }
