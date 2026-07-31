@@ -1,0 +1,9 @@
+<div class="dashboard-container">
+  <div class="dashboard-card">
+    <h1>Bienvenido al dashboard</h1>
+    <p *ngIf="usuario$ | async as usuario">
+      Hola, {{ usuario.nombre }}
+    </p>
+    <button class="btn btn-primary" (click)="cerrarSesion()">Cerrar sesión</button>
+  </div>
+</div>
