@@ -1,0 +1,48 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo">🏠</div>
+      <h1>Sistema App</h1>
+      <p *ngIf="!mostrarFormularioRegistro">Accede a tu cuenta</p>
+      <p *ngIf="mostrarFormularioRegistro">Crea una nueva cuenta</p>
+    </div>
+
+    <div class="error-message" *ngIf="error">{{ error }}</div>
+
+    <form *ngIf="!mostrarFormularioRegistro" (ngSubmit)="iniciarSesion()" class="login-form">
+      <label>Correo</label>
+      <input type="email" [(ngModel)]="correo" name="correo" required />
+
+      <label>Contraseña</label>
+      <input type="password" [(ngModel)]="contrasena" name="contrasena" required />
+
+      <button type="submit" [disabled]="cargando">{{ cargando ? 'Cargando...' : 'Iniciar sesión' }}</button>
+
+      <p class="switch-text">
+        ¿No tienes cuenta?
+        <button type="button" (click)="alternarFormulario()">Regístrate</button>
+      </p>
+    </form>
+
+    <form *ngIf="mostrarFormularioRegistro" (ngSubmit)="registrarUsuario()" class="login-form">
+      <label>Nombre</label>
+      <input type="text" [(ngModel)]="nombre" name="nombre" required />
+
+      <label>Correo</label>
+      <input type="email" [(ngModel)]="correo" name="correo" required />
+
+      <label>Contraseña</label>
+      <input type="password" [(ngModel)]="contrasena" name="contrasena" required />
+
+      <label>Confirmar contraseña</label>
+      <input type="password" [(ngModel)]="passwordConfirmacion" name="passwordConfirmacion" required />
+
+      <button type="submit" [disabled]="cargando">{{ cargando ? 'Cargando...' : 'Crear cuenta' }}</button>
+
+      <p class="switch-text">
+        ¿Ya tienes cuenta?
+        <button type="button" (click)="alternarFormulario()">Inicia sesión</button>
+      </p>
+    </form>
+  </div>
+</div>
