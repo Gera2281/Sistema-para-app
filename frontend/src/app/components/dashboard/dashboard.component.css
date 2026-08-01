@@ -347,7 +347,7 @@ h2 {
 
 table {
   width: 100%;
-  min-width: 680px;
+  min-width: 560px;
   border-collapse: collapse;
 }
 
@@ -381,6 +381,18 @@ td:first-child {
   color: #273449;
   font-size: 11px;
   font-weight: 600;
+}
+
+.table-message {
+  height: 64px;
+  color: #68758a;
+  font-size: 11px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.table-message.table-error {
+  color: #b33d35;
 }
 
 .table-avatar {

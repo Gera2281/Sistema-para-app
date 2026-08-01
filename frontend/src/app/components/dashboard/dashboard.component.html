@@ -88,7 +88,7 @@
         <div class="section-heading">
           <h3 id="user-management-title">User Management</h3>
           <button class="primary-button" type="button">
-            <span aria-hidden="true">♧</span>
+            <span aria-hidden="true">🗣</span>
             Agregar nuevo cliente
           </button>
         </div>
@@ -103,41 +103,27 @@
           <table>
             <thead>
               <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Status</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><span class="table-avatar blue">JS</span> Javier Solis</td>
-                <td>javier.solis@example.com</td>
-                <td><span class="role resident">Residente</span></td>
-                <td><span class="status active">Activo</span></td>
-                <td><button class="more-button" type="button" aria-label="Acciones de Javier Solis">•••</button></td>
+              <tr *ngIf="cargandoUsuarios">
+                <td class="table-message" colspan="4">Cargando usuarios...</td>
               </tr>
-              <tr>
-                <td><span class="table-avatar dark">AM</span> Ana Martínez</td>
-                <td>ana.mtz@security.res</td>
-                <td><span class="role guard">Guardia</span></td>
-                <td><span class="status active">En turno</span></td>
-                <td><button class="more-button" type="button" aria-label="Acciones de Ana Martínez">•••</button></td>
+              <tr *ngIf="!cargandoUsuarios && errorUsuarios">
+                <td class="table-message table-error" colspan="4">{{ errorUsuarios }}</td>
               </tr>
-              <tr>
-                <td><span class="table-avatar orange">RC</span> Roberto Carlos</td>
-                <td>rcarlos@tenant.net</td>
-                <td><span class="role tenant">Inquilino</span></td>
-                <td><span class="status inactive">Inactivo</span></td>
-                <td><button class="more-button" type="button" aria-label="Acciones de Roberto Carlos">•••</button></td>
+              <tr *ngIf="!cargandoUsuarios && !errorUsuarios && usuarios.length === 0">
+                <td class="table-message" colspan="4">Aún no hay usuarios registrados.</td>
               </tr>
-              <tr>
-                <td><span class="table-avatar light">ML</span> María López</td>
-                <td>m.lopez@gmail.com</td>
-                <td><span class="role resident">Residente</span></td>
-                <td><span class="status active">Activo</span></td>
-                <td><button class="more-button" type="button" aria-label="Acciones de María López">•••</button></td>
+              <tr *ngFor="let usuario of usuarios">
+                <td>#{{ usuario.id }}</td>
+                <td><span class="table-avatar blue">{{ usuario.nombre.charAt(0) }}</span>{{ usuario.nombre }}</td>
+                <td>{{ usuario.correo }}</td>
+                <td><button class="more-button" type="button" [attr.aria-label]="'Acciones de ' + usuario.nombre">•••</button></td>
               </tr>
             </tbody>
           </table>
