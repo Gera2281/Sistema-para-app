@@ -7,6 +7,7 @@ const pool = require('./db');
 const app = express();
 //importar rutas
 const authRoutes = require('./routes/auth');
+const usuariosRoutes = require('./routes/usuarios');
 
 
 // Middlewares
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 // Usar Rutas
 app.use('/api/auth', authRoutes);
+app.use('/api/usuarios', usuariosRoutes);
 
 // Ruta de prueba para verificar conexión con MySQL
 app.get('/api/test-db', async (req, res) => {
