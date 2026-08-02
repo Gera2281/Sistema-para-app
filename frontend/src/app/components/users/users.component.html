@@ -106,7 +106,6 @@
             <thead>
               <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Email</th>
                 <th scope="col">Role</th>
                 <th scope="col">Status</th>
                 <th scope="col">Actions</th>
@@ -124,14 +123,14 @@
               </tr>
               <tr *ngFor="let usuario of usuarios">
                 <td><span class="table-avatar blue">{{ usuario.nombre.charAt(0) }}</span>{{ usuario.nombre }}</td>
-                <td>{{ usuario.correo }}</td>
+                
                 <td>{{ usuario.rol }}</td>
                 <td>
                   <span class="status-badge" [ngClass]="{'active': usuario.estado === 'Activo', 'inactive': usuario.estado !== 'Activo'}">
                     {{ usuario.estado }}
                   </span>
                 </td>
-                <td><button class="more-button" type="button" [attr.aria-label]="'Acciones de ' + usuario.nombre">•••</button></td>
+                <td><button class="more-button" type="button" [attr.aria-label]="'Eliminar a ' + usuario.nombre" (click)="openDeleteModal(usuario)">🗑️</button></td>
               </tr>
             </tbody>
           </table>
@@ -147,3 +146,10 @@
   (close)="closeModal()" 
   (save)="onSaveUsuario($event)">
 </app-agregar-usuario-modal>
+
+<app-eliminar-usuario 
+  [visible]="isDeleteModalVisible" 
+  [usuario]="usuarioSeleccionado"
+  (close)="closeDeleteModal()" 
+  (deleteConfirmed)="onDeleteUsuario($event)">
+</app-eliminar-usuario>
