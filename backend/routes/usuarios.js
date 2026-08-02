@@ -69,4 +69,21 @@ router.post('/', verificarToken, async (req, res) => {
   }
 });
 
+router.delete('/:id', verificarToken, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [resultado] = await pool.query('DELETE FROM usuarios WHERE id = ?', [id]);
+
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado.' });
+    }
+
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error al borrar usuario:', error);
+    res.status(500).json({ error: 'No se pudo borrar el usuario.' });
+  }
+});
+
 module.exports = router;
