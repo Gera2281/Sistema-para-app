@@ -55,7 +55,7 @@
             <small class="trend positive">↗ 12%</small>
           </div>
           <p>Total Users</p>
-          <strong>1,284</strong>
+          <strong>{{ usuarios.length | number }}</strong>
         </article>
 
         <article class="stat-card">
@@ -64,7 +64,7 @@
             <small class="trend neutral">− 0%</small>
           </div>
           <p>Guards</p>
-          <strong>42</strong>
+          <strong>{{ usuarios.filter(usuario => usuario.rol === 'Guardia').length | number }}</strong>
         </article>
 
         <article class="stat-card">
@@ -73,7 +73,7 @@
             <small class="trend positive">↗ 4%</small>
           </div>
           <p>Residents</p>
-          <strong>856</strong>
+          <strong>{{ usuarios.filter(usuario => usuario.rol === 'Residente').length | number }}</strong>
         </article>
 
         <article class="stat-card">
@@ -82,7 +82,7 @@
             <small class="trend negative">↘ 2%</small>
           </div>
           <p>Tenants</p>
-          <strong>386</strong>
+          <strong>{{ usuarios.filter(usuario => usuario.rol === 'Inquilino').length | number }}</strong>
         </article>
       </section>
 
