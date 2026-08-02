@@ -8,7 +8,15 @@ export interface UsuarioListado {
   nombre: string;
   correo: string;
   rol: string;
-  estado: string;
+  estado?: string;
+}
+
+export interface NuevoUsuario {
+  nombre: string;
+  correo: string;
+  telefono?: string;
+  rol: string;
+  contrasena: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -29,7 +37,7 @@ export class UsuariosService {
       return this.http.get<UsuarioListado[]>(this.apiUrl, { headers: this.getHeaders() });
     }
   
-    crearUsuario(usuario: UsuarioListado): Observable<UsuarioListado> {
+    crearUsuario(usuario: NuevoUsuario): Observable<UsuarioListado> {
       return this.http.post<UsuarioListado>(this.apiUrl, usuario, { headers: this.getHeaders() });
     }
 }
