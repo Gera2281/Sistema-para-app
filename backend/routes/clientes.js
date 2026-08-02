@@ -24,7 +24,7 @@ function verificarToken(req, res, next) {
 router.get('/', verificarToken, async (req, res) => {
   try {
     const [clientes] = await pool.query(
-      'SELECT nombre, correo, telefono, rol FROM clientes ORDER BY id DESC'
+      'SELECT id, nombre, correo, telefono, rol FROM clientes ORDER BY id DESC'
     );
     res.json(clientes);
   } catch (error) {
@@ -65,6 +65,23 @@ router.post('/', verificarToken, async (req, res) => {
       return res.status(409).json({ error: 'El correo electrónico ya está registrado.' });
     }
     res.status(500).json({ error: 'No se pudo crear el cliente.' });
+  }
+});
+
+router.delete('/:id', verificarToken, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [resultado] = await pool.query('DELETE FROM clientes WHERE id = ?', [id]);
+
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({ error: 'Cliente no encontrado.' });
+    }
+
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error al borrar cliente:', error);
+    res.status(500).json({ error: 'No se pudo borrar el cliente.' });
   }
 });
 
