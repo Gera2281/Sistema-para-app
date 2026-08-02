@@ -1,0 +1,150 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.modal-content {
+  width: min(100%, 560px);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #dbe1ea;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
+}
+
+.modal-header,
+.modal-actions {
+  display: flex;
+  align-items: center;
+  padding: 18px 20px;
+}
+
+.modal-header {
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.close-button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: #6b7280;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  place-items: center;
+}
+
+.close-button:hover { background: #f3f4f6; }
+.close-button svg { width: 21px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+.modal-body { padding: 22px 20px 20px; }
+.form-group { margin-bottom: 18px; }
+.form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.form-row .form-group { min-width: 0; }
+
+.form-group label,
+.role-group legend {
+  display: block;
+  margin-bottom: 7px;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.form-group input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  padding: 0 13px;
+  color: #1f2937;
+  font: inherit;
+  border: 1px solid #d7dce5;
+  border-radius: 4px;
+  outline: none;
+}
+
+.form-group input::placeholder { color: #9ca3af; }
+.form-group input:focus { border-color: #4c8fe7; box-shadow: 0 0 0 3px rgba(76, 143, 231, 0.13); }
+
+.role-group { min-width: 0; margin: 2px 0 20px; padding: 0; border: 0; }
+.role-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+
+.role-option {
+  display: flex;
+  min-height: 70px;
+  padding: 10px 6px;
+  color: #4b5563;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #dce1e9;
+  border-radius: 7px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.role-option svg { width: 19px; height: 19px; stroke: currentColor; stroke-width: 1.8; fill: none; }
+.role-option.selected { color: #315d99; background: #e8f0ff; border-color: #78a9ed; box-shadow: inset 0 0 0 1px #a8c8f5; }
+
+.invitation-note {
+  display: flex;
+  gap: 13px;
+  padding: 13px 14px;
+  color: #5c6472;
+  background: #f0f5ff;
+  border: 1px solid #d7e4fa;
+  border-radius: 3px;
+  align-items: flex-start;
+}
+
+.invitation-note svg { flex: 0 0 auto; width: 18px; margin-top: 1px; color: #3678ca; stroke: currentColor; stroke-width: 2; fill: none; }
+.invitation-note p { margin: 0; font-size: 13px; line-height: 1.35; }
+
+.modal-actions {
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn {
+  min-width: 92px;
+  height: 36px;
+  padding: 0 16px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-cancel { color: #667085; background: #fff; border: 1px solid #dce1e8; }
+.btn-save { color: #fff; background: #1766c2; border: 1px solid #1766c2; }
+.btn-save:disabled { cursor: not-allowed; opacity: 0.55; }
+
+@media (max-width: 520px) {
+  .modal-overlay { padding: 12px; align-items: flex-start; overflow-y: auto; }
+  .modal-content { margin: auto 0; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .role-options { gap: 7px; }
+  .role-option { min-height: 66px; font-size: 11px; }
+  .modal-header, .modal-body, .modal-actions { padding-right: 16px; padding-left: 16px; }
+}
