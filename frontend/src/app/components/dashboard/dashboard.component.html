@@ -87,7 +87,7 @@
       <section class="user-management" id="users" aria-labelledby="user-management-title">
         <div class="section-heading">
           <h3 id="user-management-title">User Management</h3>
-          <button class="primary-button" type="button">
+          <button class="primary-button" type="button" (click)="openModal()">
             <span aria-hidden="true">🗣</span>
             Agregar nuevo cliente
           </button>
@@ -103,27 +103,33 @@
           <table>
             <thead>
               <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngIf="cargandoUsuarios">
-                <td class="table-message" colspan="4">Cargando usuarios...</td>
+              <tr *ngIf="cargandoClientes">
+                <td class="table-message" colspan="4">Cargando clientes...</td>
               </tr>
-              <tr *ngIf="!cargandoUsuarios && errorUsuarios">
-                <td class="table-message table-error" colspan="4">{{ errorUsuarios }}</td>
+              <tr *ngIf="!cargandoClientes && errorClientes">
+                <td class="table-message table-error" colspan="4">{{ errorClientes }}</td>
               </tr>
-              <tr *ngIf="!cargandoUsuarios && !errorUsuarios && usuarios.length === 0">
-                <td class="table-message" colspan="4">Aún no hay usuarios registrados.</td>
+              <tr *ngIf="!cargandoClientes && !errorClientes && clientes.length === 0">
+                <td class="table-message" colspan="4">Aún no hay clientes registrados.</td>
               </tr>
-              <tr *ngFor="let usuario of usuarios">
-                <td>#{{ usuario.id }}</td>
-                <td><span class="table-avatar blue">{{ usuario.nombre.charAt(0) }}</span>{{ usuario.nombre }}</td>
-                <td>{{ usuario.correo }}</td>
-                <td><button class="more-button" type="button" [attr.aria-label]="'Acciones de ' + usuario.nombre">•••</button></td>
+              <tr *ngFor="let cliente of clientes">
+                <td><span class="table-avatar blue">{{ cliente.nombre.charAt(0) }}</span>{{ cliente.nombre }}</td>
+                <td>{{ cliente.correo }}</td>
+                <td>{{ cliente.rol }}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="{'active': cliente.estado === 'Activo', 'inactive': cliente.estado !== 'Activo'}">
+                    {{ cliente.estado }}
+                  </span>
+                </td>
+                <td><button class="more-button" type="button" [attr.aria-label]="'Acciones de ' + cliente.nombre">•••</button></td>
               </tr>
             </tbody>
           </table>
@@ -132,3 +138,9 @@
     </section>
   </main>
 </div>
+
+<app-agregar-cliente-modal 
+  [visible]="isModalVisible" 
+  (close)="closeModal()" 
+  (save)="onSaveCliente($event)">
+</app-agregar-cliente-modal>
