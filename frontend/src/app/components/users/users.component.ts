@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { timeout } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { UsuarioListado, UsuariosService } from '../../services/usuarios.service';
-import { AgregarClienteModalComponent } from '../agregar-cliente-modal/agregar-cliente-modal';
+import { NuevoUsuario, UsuarioListado, UsuariosService } from '../../services/usuarios.service';
+import { AgregarUsuarioModalComponent } from '../agregar-usuario-modal/agregar-usuario-modal';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, AgregarClienteModalComponent],
+  imports: [CommonModule, AgregarUsuarioModalComponent],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
@@ -18,6 +18,7 @@ export class UsersComponent implements OnInit {
   usuarios: UsuarioListado[] = [];
   cargandoUsuarios = true;
   errorUsuarios = '';
+  errorGuardarUsuario = '';
   isModalVisible = false;
 
   constructor(
@@ -64,6 +65,7 @@ export class UsersComponent implements OnInit {
   }
 
   openModal(): void {
+    this.errorGuardarUsuario = '';
     this.isModalVisible = true;
   }
 
@@ -71,7 +73,7 @@ export class UsersComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  onSaveUsuario(nuevoUsuario: UsuarioListado): void {
+  onSaveUsuario(nuevoUsuario: NuevoUsuario): void {
     this.usuariosService.crearUsuario(nuevoUsuario).subscribe({
       next: (usuarioCreado) => {
         console.log('Usuario creado con exito:', usuarioCreado);
@@ -81,7 +83,8 @@ export class UsersComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al guardar usuario:', error);
-        this.closeModal();
+        this.errorGuardarUsuario = error.error?.error || 'No se pudo guardar el usuario. Intenta nuevamente.';
+        this.changeDetector.detectChanges();
       }
     });
   }
@@ -91,4 +94,3 @@ export class UsersComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 }
-
