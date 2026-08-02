@@ -19,6 +19,16 @@ export interface NuevoUsuario {
   contrasena: string;
 }
 
+export interface BorrarUsuario {
+  id: number;
+  estado?: string;
+  rol?: string;
+  correo?: string;
+  nombre?: string;
+  telefono?: string;
+  contrasena?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class UsuariosService {
   private readonly apiUrl = 'http://localhost:3000/api/usuarios';
@@ -39,5 +49,9 @@ export class UsuariosService {
   
     crearUsuario(usuario: NuevoUsuario): Observable<UsuarioListado> {
       return this.http.post<UsuarioListado>(this.apiUrl, usuario, { headers: this.getHeaders() });
+    }
+
+    borrarUsuario(usuario: BorrarUsuario): Observable<void> {
+      return this.http.delete<void>(`${this.apiUrl}/${usuario.id}`, { headers: this.getHeaders() });
     }
 }
