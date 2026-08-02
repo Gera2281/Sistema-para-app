@@ -24,7 +24,7 @@ function verificarToken(req, res, next) {
 router.get('/', verificarToken, async (req, res) => {
   try {
     const [clientes] = await pool.query(
-      'SELECT id, nombre, correo, telefono, rol FROM clientes ORDER BY id DESC'
+      'SELECT nombre, correo, telefono, rol FROM clientes ORDER BY id DESC'
     );
     res.json(clientes);
   } catch (error) {
