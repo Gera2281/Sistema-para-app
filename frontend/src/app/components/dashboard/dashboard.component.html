@@ -17,6 +17,13 @@
       <a class="nav-link" href="#reports"><span aria-hidden="true">▤</span> Reports</a>
       <a class="nav-link" href="#settings"><span aria-hidden="true">⚙</span> Settings</a>
     </nav>
+
+    <div class="sidebar-bottom">
+      <button class="sidebar-invite-button" type="button">Invite User</button>
+      <button class="sidebar-help-button" type="button" aria-label="Help Center"><span aria-hidden="true">ℹ</span> Help Center</button>
+      <button class="sidebar-logout-button" type="button" (click)="cerrarSesion()">➜] Logout</button>
+    </div>
+    
   </aside>
 
   <main class="dashboard-main">
@@ -30,7 +37,6 @@
         <button class="icon-button" type="button" aria-label="Ver notificaciones">♧</button>
         <button class="icon-button" type="button" aria-label="Abrir configuración">⚙</button>
         <span class="user-avatar" aria-hidden="true">{{ usuario.nombre.charAt(0) }}</span>
-        <button class="logout-button" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
       </div>
     </header>
 
