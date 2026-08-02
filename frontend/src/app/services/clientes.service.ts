@@ -5,12 +5,23 @@ import { AuthService } from './auth.service';
 
 
 export interface Cliente {
+  id: number;
   nombre: string;
   correo: string;
   telefono: string;
   rol: string;
   estado?: string; // Propiedad opcional para el estado del cliente
 }
+
+export interface BorrarCliente {
+  id: number;
+  nombre: string;
+  correo: string;
+  telefono: string;
+  rol: string;
+  estado?: string;
+} 
+
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +45,9 @@ export class ClientesService {
 
   crearCliente(cliente: Cliente): Observable<Cliente> {
     return this.http.post<Cliente>(this.apiUrl, cliente, { headers: this.getHeaders() });
+  }
+
+  borrarCliente(cliente: BorrarCliente): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${cliente.id}`, { headers: this.getHeaders() });
   }
 }
