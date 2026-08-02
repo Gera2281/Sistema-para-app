@@ -137,7 +137,7 @@
                     {{ cliente.estado }}
                   </span>
                 </td>
-                <td><button class="more-button" type="button" [attr.aria-label]="'Acciones de ' + cliente.nombre">•••</button></td>
+                <td><button class="more-button" type="button" [attr.aria-label]="'Eliminar a ' + cliente.nombre" (click)="openDeleteModal(cliente)">🗑️</button></td>
               </tr>
             </tbody>
           </table>
@@ -152,3 +152,10 @@
   (close)="closeModal()" 
   (save)="onSaveCliente($event)">
 </app-agregar-cliente-modal>
+
+<app-eliminar-cliente-modal 
+  [visible]="isDeleteModalVisible" 
+  [cliente]="clienteSeleccionado"
+  (close)="closeDeleteModal()" 
+  (deleteConfirmed)="onDeleteCliente($event)">
+</app-eliminar-cliente-modal>
