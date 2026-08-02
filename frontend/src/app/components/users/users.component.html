@@ -1,0 +1,148 @@
+<div class="dashboard-layout" *ngIf="usuario$ | async as usuario">
+  <aside class="sidebar" aria-label="Navegación principal">
+    <div class="brand">
+      <span class="brand-name">domain Residentify</span>
+      <small>Management Portal</small>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-link active" href="dashboard" aria-current="page">
+        <span aria-hidden="true">▦</span>
+        Dashboard
+      </a>
+      <a class="nav-link active" href="users" aria-current="page">
+        <span aria-hidden="true">♙</span>
+         Users</a>
+      <a class="nav-link" href="#properties"><span aria-hidden="true">▦</span> Properties</a>
+      <a class="nav-link" href="#reports"><span aria-hidden="true">▤</span> Reports</a>
+      <a class="nav-link" href="#settings"><span aria-hidden="true">⚙</span> Settings</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <header class="topbar">
+      <label class="search-box" for="dashboard-search">
+        <span aria-hidden="true">⌕</span>
+        <input id="dashboard-search" type="search" placeholder="Buscar residentes, propiedades..." />
+      </label>
+
+      <div class="topbar-actions">
+        <button class="icon-button" type="button" aria-label="Ver notificaciones">♧</button>
+        <button class="icon-button" type="button" aria-label="Abrir configuración">⚙</button>
+        <span class="user-avatar" aria-hidden="true">{{ usuario.nombre.charAt(0) }}</span>
+        <button class="logout-button" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <section class="dashboard-content" id="overview">
+      <div class="page-heading">
+        <div>
+          <h1>System Overview</h1>
+          <p>Welcome back, {{ usuario.nombre }}. Here's what's happening today at Residentify.</p>
+        </div>
+
+        <div class="period-selector" role="group" aria-label="Periodo del resumen">
+          <button class="active" type="button">Today</button>
+          <button type="button">Weekly</button>
+          <button type="button">Monthly</button>
+        </div>
+      </div>
+
+      <section class="stats-grid" aria-label="Indicadores principales">
+        <article class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-icon users" aria-hidden="true">♟</span>
+            <small class="trend positive">↗ 12%</small>
+          </div>
+          <p>Total Users</p>
+          <strong>1,284</strong>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-icon guards" aria-hidden="true">♦</span>
+            <small class="trend neutral">− 0%</small>
+          </div>
+          <p>Guards</p>
+          <strong>42</strong>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-icon residents" aria-hidden="true">⌂</span>
+            <small class="trend positive">↗ 4%</small>
+          </div>
+          <p>Residents</p>
+          <strong>856</strong>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-icon tenants" aria-hidden="true">♙</span>
+            <small class="trend negative">↘ 2%</small>
+          </div>
+          <p>Tenants</p>
+          <strong>386</strong>
+        </article>
+      </section>
+
+      <section class="user-management" id="users" aria-labelledby="user-management-title">
+        <div class="section-heading">
+          <h3 id="user-management-title">User Management</h3>
+          <button class="primary-button" type="button" (click)="openModal()">
+            <span aria-hidden="true">🗣</span>
+            Agregar nuevo usuario
+          </button>
+        </div>
+
+        <div class="filters" aria-label="Filtros de usuarios">
+          <button class="filter-button" type="button">☰ Filter By</button>
+          <button class="filter-button" type="button">Role: All⌄</button>
+          <button class="filter-button" type="button">Status: Active⌄</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="cargandoUsuarios">
+                <td class="table-message" colspan="4">Cargando usuarios...</td>
+              </tr>
+              <tr *ngIf="!cargandoUsuarios && errorUsuarios">
+                <td class="table-message table-error" colspan="4">{{ errorUsuarios }}</td>
+              </tr>
+              <tr *ngIf="!cargandoUsuarios && !errorUsuarios && usuarios.length === 0">
+                <td class="table-message" colspan="4">Aún no hay usuarios registrados.</td>
+              </tr>
+              <tr *ngFor="let usuario of usuarios">
+                <td><span class="table-avatar blue">{{ usuario.nombre.charAt(0) }}</span>{{ usuario.nombre }}</td>
+                <td>{{ usuario.correo }}</td>
+                <td>{{ usuario.rol }}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="{'active': usuario.estado === 'Activo', 'inactive': usuario.estado !== 'Activo'}">
+                    {{ usuario.estado }}
+                  </span>
+                </td>
+                <td><button class="more-button" type="button" [attr.aria-label]="'Acciones de ' + usuario.nombre">•••</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+</div>
+
+<app-agregar-cliente-modal 
+  [visible]="isModalVisible" 
+  (close)="closeModal()" 
+  (save)="onSaveUsuario($event)">
+</app-agregar-cliente-modal>
