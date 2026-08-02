@@ -5,11 +5,12 @@ import { timeout } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { Cliente, ClientesService} from '../../services/clientes.service';
 import { AgregarClienteModalComponent } from '../agregar-cliente-modal/agregar-cliente-modal';
+import { EliminarClienteModalComponent } from '../eliminar-cliente/eliminar-cliente';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, AgregarClienteModalComponent],
+  imports: [CommonModule, RouterModule, AgregarClienteModalComponent, EliminarClienteModalComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -19,6 +20,17 @@ export class DashboardComponent implements OnInit {
   cargandoClientes = true;
   errorClientes = '';
   isModalVisible = false;
+  isDeleteModalVisible = false;
+  clienteSeleccionado: Cliente = { id: 0, nombre: '', correo: '', rol: '', telefono: '', estado: 'Activo' };
+
+  closeDeleteModal() {
+    this.isDeleteModalVisible = false;
+  }
+
+  openDeleteModal(cliente: Cliente) {
+    this.clienteSeleccionado = cliente;
+    this.isDeleteModalVisible = true;
+  }
 
   constructor(
     private authService: AuthService,
@@ -85,6 +97,21 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+  onDeleteCliente(cliente: Cliente): void {
+    console.log('DashboardComponent: onDeleteCliente received', cliente);
+      this.clientesService.borrarCliente(cliente).subscribe({
+        next: () => {
+          this.clientes = this.clientes.filter(c => c.id !== cliente.id);
+          this.closeDeleteModal();
+          this.changeDetector.detectChanges();
+          console.log('Cliente eliminado con éxito');
+        },
+        error: (error) => {
+          console.error('Error al eliminar cliente:', error);
+        }
+      });
+    }
 
   cerrarSesion(): void {
     this.authService.logout();
