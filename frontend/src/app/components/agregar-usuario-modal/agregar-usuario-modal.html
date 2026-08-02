@@ -1,0 +1,74 @@
+<div class="modal-overlay" *ngIf="visible">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <header class="modal-header">
+      <h2 id="modal-title">Agregar Nuevo Usuario</h2>
+      <button class="close-button" type="button" aria-label="Cerrar" (click)="onClose()">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
+    </header>
+
+    <form #usuarioForm="ngForm" (ngSubmit)="onSave()">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" placeholder="Ej. Alexander Hamilton" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="correo">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" [(ngModel)]="usuario.correo" placeholder="alex@ejemplo.com" required />
+          </div>
+          <div class="form-group">
+            <label for="telefono">Número de teléfono</label>
+            <input type="tel" id="telefono" name="telefono" [(ngModel)]="usuario.telefono" placeholder="+52 (00) 0000-0000" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="contrasena">Contraseña</label>
+          <input
+            type="password"
+            id="contrasena"
+            name="contrasena"
+            [(ngModel)]="usuario.contrasena"
+            placeholder="Mínimo 8 caracteres"
+            minlength="8"
+            required
+          />
+        </div>
+
+        <fieldset class="role-group">
+          <legend>Rol de usuario</legend>
+          <div class="role-options">
+            <button type="button" class="role-option" [class.selected]="usuario.rol === 'Guardia'" (click)="usuario.rol = 'Guardia'">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5.5 6v5c0 4.3 2.8 8.3 6.5 10 3.7-1.7 6.5-5.7 6.5-10V6L12 3Z" /><path d="M12 7v5" /></svg>
+              <span>Guardia</span>
+            </button>
+            <button type="button" class="role-option" [class.selected]="usuario.rol === 'Residente'" (click)="usuario.rol = 'Residente'">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 10 8-6 8 6v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9Z" /></svg>
+              <span>Residente</span>
+            </button>
+            <button type="button" class="role-option" [class.selected]="usuario.rol === 'Inquilino'" (click)="usuario.rol = 'Inquilino'">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3" /><circle cx="17" cy="15" r="3" /><path d="M3 19c.4-3 2.3-5 6-5M14 7h6M17 4v6" /></svg>
+              <span>Inquilino</span>
+            </button>
+          </div>
+        </fieldset>
+
+        <div class="invitation-note" role="note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" /><path d="M12 11v5M12 8h.01" /></svg>
+          <p>Se enviará un correo de invitación al usuario para que establezca su contraseña cuando se guarde el perfil.</p>
+        </div>
+        <p *ngIf="errorGuardar" class="save-error" role="alert">{{ errorGuardar }}</p>
+      </div>
+
+      <footer class="modal-actions">
+        <button type="button" class="btn btn-cancel" (click)="onClose()">Cancelar</button>
+        <button type="submit" class="btn btn-save" [disabled]="!usuarioForm.valid">Guardar usuario</button>
+      </footer>
+    </form>
+  </div>
+</div>
