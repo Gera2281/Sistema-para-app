@@ -1,5 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const pool = require('../db');
 
 const router = express.Router();
@@ -24,12 +25,47 @@ function verificarToken(req, res, next) {
 router.get('/', verificarToken, async (req, res) => {
   try {
     const [usuarios] = await pool.query(
-      'SELECT id, nombre, correo FROM usuarios ORDER BY id DESC'
+      'SELECT id, nombre, correo, telefono, rol FROM usuarios ORDER BY id DESC'
     );
     res.json(usuarios);
   } catch (error) {
     console.error('Error al consultar usuarios:', error);
     res.status(500).json({ error: 'No se pudieron obtener los usuarios.' });
+  }
+});
+
+router.post('/', verificarToken, async (req, res) => {
+  const { nombre, correo, telefono, rol, contrasena } = req.body;
+
+  if (!nombre || !correo || !rol || !contrasena) {
+    return res.status(400).json({ error: 'Nombre, correo, rol y contraseña son obligatorios.' });
+  }
+
+  if (contrasena.length < 8) {
+    return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres.' });
+  }
+
+  try {
+    const contrasenaCifrada = await bcrypt.hash(contrasena, 10);
+    const [resultado] = await pool.query(
+      'INSERT INTO usuarios (nombre, correo, contrasena, telefono, rol) VALUES (?, ?, ?, ?, ?)',
+      [nombre, correo, contrasenaCifrada, telefono || null, rol]
+    );
+
+    res.status(201).json({
+      id: resultado.insertId,
+      nombre,
+      correo,
+      telefono: telefono || null,
+      rol
+    });
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({ error: 'El correo electrónico ya está registrado.' });
+    }
+
+    console.error('Error al crear usuario:', error);
+    res.status(500).json({ error: 'No se pudo crear el usuario.' });
   }
 });
 
