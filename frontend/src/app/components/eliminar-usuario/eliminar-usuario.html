@@ -1,0 +1,30 @@
+<div class="modal-overlay" *ngIf="visible">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+    <header class="modal-header">
+      <span class="warning-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 3 21 20H3L12 3Z" /><path d="M12 9v4M12 16h.01" /></svg>
+      </span>
+      <h2 id="delete-modal-title">Confirmar eliminación</h2>
+      <button class="close-button" type="button" aria-label="Cerrar" (click)="onClose()">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+      </button>
+    </header>
+
+    <div class="modal-body">
+      <p class="confirmation-text">¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer y se perderán todos los datos asociados.</p>
+
+      <div class="user-summary">
+        <span class="user-avatar" aria-hidden="true">{{ usuario.nombre.charAt(0) }}</span>
+        <div>
+          <strong>{{ usuario.nombre }}</strong>
+          <p>{{ usuario.rol }} <span aria-hidden="true">•</span> {{ usuario.correo }}</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="modal-actions">
+      <button type="button" class="btn btn-cancel" (click)="onClose()">Cancelar</button>
+      <button type="button" class="btn btn-delete" (click)="confirmDelete()">Eliminar usuario</button>
+    </footer>
+  </div>
+</div>
