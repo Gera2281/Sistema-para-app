@@ -5,11 +5,12 @@ import { timeout } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { NuevoUsuario, UsuarioListado, UsuariosService } from '../../services/usuarios.service';
 import { AgregarUsuarioModalComponent } from '../agregar-usuario-modal/agregar-usuario-modal';
+import { EliminarUsuarioModalComponent } from '../eliminar-usuario/eliminar-usuario';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, AgregarUsuarioModalComponent],
+  imports: [CommonModule, AgregarUsuarioModalComponent, EliminarUsuarioModalComponent],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
@@ -20,6 +21,17 @@ export class UsersComponent implements OnInit {
   errorUsuarios = '';
   errorGuardarUsuario = '';
   isModalVisible = false;
+  isDeleteModalVisible = false;
+  usuarioSeleccionado: UsuarioListado = { id: 0, nombre: '', correo: '', rol: '' };
+
+  closeDeleteModal() {
+    this.isDeleteModalVisible = false;
+  }
+
+  openDeleteModal(usuario: UsuarioListado) {
+    this.usuarioSeleccionado = usuario;
+    this.isDeleteModalVisible = true;
+  }
 
   constructor(
     private authService: AuthService,
@@ -85,6 +97,20 @@ export class UsersComponent implements OnInit {
         console.error('Error al guardar usuario:', error);
         this.errorGuardarUsuario = error.error?.error || 'No se pudo guardar el usuario. Intenta nuevamente.';
         this.changeDetector.detectChanges();
+      }
+    });
+  }
+
+  onDeleteUsuario(usuario: UsuarioListado): void {
+    this.usuariosService.borrarUsuario({ id: usuario.id }).subscribe({
+      next: () => {
+        this.usuarios = this.usuarios.filter(u => u.id !== usuario.id);
+        this.closeDeleteModal();
+        this.changeDetector.detectChanges();
+        console.log('Usuario eliminado con éxito');
+      },
+      error: (error) => {
+        console.error('Error al eliminar usuario:', error);
       }
     });
   }
