@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { timeout } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { Cliente, ClientesService} from '../../services/clientes.service';
@@ -9,7 +9,7 @@ import { AgregarClienteModalComponent } from '../agregar-cliente-modal/agregar-c
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, AgregarClienteModalComponent],
+  imports: [CommonModule, RouterModule, AgregarClienteModalComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })

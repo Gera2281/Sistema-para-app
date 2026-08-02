@@ -6,11 +6,11 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="nav-link active" href="dashboard" aria-current="page">
+      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span aria-hidden="true">▦</span>
         Dashboard
       </a>
-      <a class="nav-link active" href="users" aria-current="page">
+      <a class="nav-link" routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span aria-hidden="true">♙</span>
          Users</a>
       <a class="nav-link" href="#properties"><span aria-hidden="true">▦</span> Properties</a>

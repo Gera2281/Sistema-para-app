@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { timeout } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { NuevoUsuario, UsuarioListado, UsuariosService } from '../../services/usuarios.service';
@@ -10,7 +10,7 @@ import { EliminarUsuarioModalComponent } from '../eliminar-usuario/eliminar-usua
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, AgregarUsuarioModalComponent, EliminarUsuarioModalComponent],
+  imports: [CommonModule, RouterModule, AgregarUsuarioModalComponent, EliminarUsuarioModalComponent],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
