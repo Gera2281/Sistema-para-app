@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ForgotPasswordModalComponent } from '../forgot-password-modal/forgot-password-modal';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ForgotPasswordModalComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -43,6 +44,10 @@ export class LoginComponent {
         this.error = err.error?.error || 'No se pudo iniciar sesión.';
       }
     });
+  }
+
+  forgotPassword(): void {
+    this.showForgotPasswordModal = true;
   }
 
   registrarUsuario(): void {
