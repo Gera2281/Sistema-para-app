@@ -30,7 +30,9 @@
       <div class="form-field">
         <div class="label-row">
           <label for="login-password">Password</label>
-          <button class="text-button" type="button">Forgot password?</button>
+          <button class="text-button" type="button" (click)="showForgotPasswordModal = true">
+            {{cargando ? 'Signing in...' : 'Forgot password?'}}
+          </button>
         </div>
         <div class="input-control">
           <span class="input-icon" aria-hidden="true">🔒︎</span>
@@ -56,6 +58,8 @@
         <button type="button" (click)="alternarFormulario()">Sign up</button>
       </p>
     </form>
+
+    <app-forgot-password-modal *ngIf="showForgotPasswordModal" (closeModal)="showForgotPasswordModal = false"></app-forgot-password-modal>
 
     <form *ngIf="mostrarFormularioRegistro" (ngSubmit)="registrarUsuario()" class="login-form register-form">
       <div class="form-field">

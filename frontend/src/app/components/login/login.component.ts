@@ -20,6 +20,7 @@ export class LoginComponent {
   mostrarContrasena = false;
   cargando = false;
   error = '';
+  showForgotPasswordModal = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
