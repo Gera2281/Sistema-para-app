@@ -9,6 +9,7 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const usuariosRoutes = require('./routes/usuarios');
 const clientesRoutes = require('./routes/clientes');
+const passwordResetRoutes = require('./routes/password-reset');
 
 
 // Middlewares
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/clientes', clientesRoutes);
+app.use('/api', passwordResetRoutes);
 
 // Ruta de prueba para verificar conexión con MySQL
 app.get('/api/test-db', async (req, res) => {
