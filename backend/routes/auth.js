@@ -70,8 +70,8 @@ router.post('/login', async (req, res) => {
       } 
     };
     
-    // Usar clave secreta del archivo.env o una por defecto
-    const secretKey = process.env.JWT_SECRET || 'tu_clave_secreta_por_defecto';
+    // Usar clave secreta del archivo .env
+    const secretKey = process.env.JWT_SECRET;
 
     const token = jwt.sign(payload, secretKey, { expiresIn: '1h' }); // El token expira en 1 hora
 
